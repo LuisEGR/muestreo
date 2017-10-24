@@ -88,6 +88,17 @@ ArrayDouble crearTrenDeImpulsos(float duracion, int fm, int fmt) {
   return tren;
 }
 
+
+/*
+ * Function:  crearSeno
+ * --------------------
+ *  Crea muestras de una función seno
+ *  arguments
+ *  items   :  número de muestras
+ *  fm      :  frecuencia de muestreo
+ *
+ *  returns: estructura ArrayDouble con las muestras del seno
+ */
 ArrayDouble crearSeno(int items, float fm) {
   ArrayDouble out = newArrayDouble(items);
   for (int i = 0; i < items; i++) {

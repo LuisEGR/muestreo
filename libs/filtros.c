@@ -54,7 +54,18 @@ ArrayDouble obtenerMuestrasPasabajasRC(int cantidad, float fc, float fm) {
   return muestras;
 }
 
-
+/*
+ * Function:  obtenerMuestrasPasabajasIdeal
+ * --------------------
+ * Genera un arreglo de muestras de un fitro pasabajas ideal
+ *
+ *  arguments
+ *  cantidad:  cantidad de muestras a generar
+ *  fc :  frecuencia de corte en hz
+ *  fm :  frecuencia de muestreo en hz
+ *
+ *  returns: estructura ArrayDouble con las muestras del filtro
+ */
 ArrayDouble obtenerMuestrasPasabajasIdeal(int cantidad, float fc, float fm){
    float Wc = (2*M_PI*fc)/fm;
   float muestraTmp;
