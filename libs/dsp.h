@@ -29,4 +29,6 @@ ArrayDouble convolucionPorFormula(FILE *file_p, WAVHeader header,
                                   ArrayDouble g);
 // ArrayDouble crearTrenDeImpulsos(float duracion, int fm);
 ArrayDouble crearTrenDeImpulsos(float duracion, int fm, int intervalo);
+ArrayDouble crearSeno(int items, float fm);
+
 #endif

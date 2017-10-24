@@ -72,7 +72,7 @@ ArrayDouble convolucionPorFormula(FILE *file_p, WAVHeader header,
  *  arguments
  *  duracion:  duración en segundos
  *  fm      :  frecuencia de muestreo
- *  intervalo: frecuencia de muestreo del tren
+ *  fmt     : frecuencia de muestreo del tren
  *
  *  returns: estructura ArrayDouble con el tren de impulsos
  */
@@ -86,4 +86,12 @@ ArrayDouble crearTrenDeImpulsos(float duracion, int fm, int fmt) {
     tren.items[i] = 1;
   }
   return tren;
+}
+
+ArrayDouble crearSeno(int items, float fm) {
+  ArrayDouble out = newArrayDouble(items);
+  for (int i = 0; i < items; i++) {
+    out.items[i] = sin(2 * M_PI * i * 1.0 / fm);
+  }
+  return out;
 }

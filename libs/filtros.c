@@ -53,3 +53,20 @@ ArrayDouble obtenerMuestrasPasabajasRC(int cantidad, float fc, float fm) {
   }
   return muestras;
 }
+
+
+ArrayDouble obtenerMuestrasPasabajasIdeal(int cantidad, float fc, float fm){
+   float Wc = (2*M_PI*fc)/fm;
+  float muestraTmp;
+
+  ArrayDouble muestras = newArrayDouble(cantidad);
+  for(int n = 0; n < cantidad; n++){
+    if(n!=0){
+      muestraTmp = sin(Wc*n) / (M_PI * n);
+    }else{
+      muestraTmp = Wc / M_PI;
+    }
+    muestras.items[n] = muestraTmp;
+  }
+  return muestras;
+}

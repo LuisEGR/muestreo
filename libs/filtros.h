@@ -26,5 +26,7 @@ IN THE SOFTWARE.
 
 // Filtro pasabajas RC
 ArrayDouble obtenerMuestrasPasabajasRC(int cantidad, float fc, float fm);
+ArrayDouble obtenerMuestrasPasabajasIdeal(int cantidad, float fc, float fm);
+
 
 #endif
