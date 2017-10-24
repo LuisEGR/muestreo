@@ -52,3 +52,7 @@ Mkfile.old
 dkms.conf
 .DS_Store
 **/c_cpp_properties.json
+.vscode
+
+#Ejecutable
+muestreo
