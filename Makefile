@@ -5,8 +5,8 @@ LIBS_OBJECTS := $(LIBS_SOURCES:.c=.o) # Reemplazo las extensiones .c a .o
 all: $(PROJECT)
 
 $(PROJECT): clibs
-	gcc -Wall -c main.c -o main.o -w
-	gcc -Wall main.o $(LIBS_OBJECTS) -o $(PROJECT)
+	gcc -Wall -c main.c -o main.o -w -lm
+	gcc -Wall main.o $(LIBS_OBJECTS) -o $(PROJECT) -lm
 
 clibs: $(LIBS_OBJECTS)
 	cd libs; make

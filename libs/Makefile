@@ -1,6 +1,6 @@
 SRCS	= 	$(wildcard *.c) #Buscar todos los archivos fuente .c
 OBJS	= 	$(SRCS:%.c=%.o)
-CFLAGS	=	-Wall
+CFLAGS	=	-Wall -lm
 
 all: $(OBJS)
 
