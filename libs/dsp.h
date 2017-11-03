@@ -27,8 +27,14 @@ IN THE SOFTWARE.
 
 ArrayDouble convolucionPorFormula(FILE *file_p, WAVHeader header,
                                   ArrayDouble g);
-// ArrayDouble crearTrenDeImpulsos(float duracion, int fm);
+
 ArrayDouble crearTrenDeImpulsos(float duracion, int fm, int intervalo);
 ArrayDouble crearSeno(int items, float fm);
+
+// Transformada Discreta de Fourier
+ArrayComplex transformadaFourier(FILE *file_p, WAVHeader header);
+ArrayDouble transformadaFourierInversa(ArrayComplex X);
+// ArrayComplex transformadaFourier(ArrayDouble x);
+// ArrayComplex transformadaFourierInversa(ArrayComplex x);
 
 #endif

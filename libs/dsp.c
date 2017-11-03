@@ -24,6 +24,7 @@ IN THE SOFTWARE.
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "complex.h"
 #include "estructuras.h"
 #include "wav.h"
 
@@ -88,7 +89,6 @@ ArrayDouble crearTrenDeImpulsos(float duracion, int fm, int fmt) {
   return tren;
 }
 
-
 /*
  * Function:  crearSeno
  * --------------------
@@ -106,3 +106,44 @@ ArrayDouble crearSeno(int items, float fm) {
   }
   return out;
 }
+
+ArrayComplex transformadaFourier(FILE *file_p, WAVHeader header) {
+  int N = header.Subchunk2Size / (header.BitsPerSample / 8);
+  double ang;
+  ArrayComplex X = newArrayComplex(N);
+  for (int k = 0; k <= N - 1; k++) {
+    X.items[k] = newComplexNumber(0, 0);
+    // ang = - (2 * M_PI * k) / N
+    for (int n = 0; n <= N - 1; n++) {
+      MuestraMono muestra = readSampleMono(file_p, n);
+      ang = -(2.0 * M_PI * k * n) / N;
+      X.items[k].real += muestra.muestra * cos(ang);
+      X.items[k].imag += muestra.muestra * sin(ang);
+    }
+  }
+  return X;
+}
+
+ArrayDouble transformadaFourierInversa(ArrayComplex X) {
+  int N = X.length;
+  double ang;
+  double con;
+  double sumTemp;
+  ComplexNumber multi;
+  ArrayDouble x = newArrayDouble(N);
+  for (int n = 0; n <= N - 1; n++) {
+    sumTemp = 0;
+    for (int k = 0; k <= N / 2; k++) {
+      ang = (2 * M_PI * k * n) / N;
+      multi = complexMulti(X.items[k], newComplexNumber(cos(ang), sin(ang)));
+      sumTemp += multi.real;
+      printComplex(multi);
+    }
+    x.items[n] = (1 / N) * sumTemp;
+  }
+  return x;
+}
+
+// ang = 2 * M_PI * k * n / N;
+// con = 1 / N;
+// x.items[n] = con * /

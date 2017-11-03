@@ -164,7 +164,8 @@ int writeWAVHeader(FILE *file_p, WAVHeader wav_header) {
  *
  *  returns: <none>
  */
-void printHeaderWAV(WAVHeader header) {
+void printHeaderWAV(WAVHeader header, char *nombre) {
+  printf("\n==> %s <==\n", nombre);
   printf("------- Cabecera WAV -------\n");
   printf("ChunkID:\t%s\n", header.ChunkID);
   printf("ChunkSize:\t%d Bytes\n", header.ChunkSize);

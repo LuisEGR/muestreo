@@ -22,10 +22,19 @@ IN THE SOFTWARE.
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
+#define START_AND_END 1
+
+#include "complex.h"
+
 typedef struct ArrayDouble {
   unsigned int length;
   double* items;
 } ArrayDouble;
+
+typedef struct ArrayComplex {
+  unsigned int length;
+  ComplexNumber* items;
+} ArrayComplex;
 
 ArrayDouble newArrayDouble(int size);
 ArrayDouble mapArrayDouble(ArrayDouble a, double from, double to);
@@ -35,4 +44,13 @@ double getMenorDouble(ArrayDouble a);
 
 void printArrayDouble(ArrayDouble a);
 
+ArrayComplex newArrayComplex(int size);
+void printArrayComplex(ArrayComplex a);
+
+ArrayDouble getRealFromArrayComplex(ArrayComplex c);
+ArrayDouble getImagFromArrayComplex(ArrayComplex c);
+ArrayDouble getMagFromArrayComplex(ArrayComplex c);
+ArrayDouble getAngFromArrayComplex(ArrayComplex c);
+
+ArrayDouble cutArrayDouble(ArrayDouble arr, int size_cut, int mode);
 #endif

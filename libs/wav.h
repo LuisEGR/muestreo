@@ -78,7 +78,7 @@ MuestraMono readSampleMono(FILE *file_p, int index);
 MuestraEstereo readSampleEstereo(FILE *file_p, int index);
 float getDuracionWAV(WAVHeader header);
 // Mostrar en terminal
-void printHeaderWAV(WAVHeader header);
+// void printHeaderWAV(WAVHeader header);
+void printHeaderWAV(WAVHeader header, char *nombre);
 void printSamplesWAV(FILE *file_p, WAVHeader header);
-
 #endif

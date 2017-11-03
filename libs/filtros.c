@@ -66,18 +66,25 @@ ArrayDouble obtenerMuestrasPasabajasRC(int cantidad, float fc, float fm) {
  *
  *  returns: estructura ArrayDouble con las muestras del filtro
  */
-ArrayDouble obtenerMuestrasPasabajasIdeal(int cantidad, float fc, float fm){
-   float Wc = (2*M_PI*fc)/fm;
+ArrayDouble obtenerMuestrasPasabajasIdeal(int cantidad, float fc, float fm) {
+  float Wc = (2 * M_PI * fc) / fm;
   float muestraTmp;
 
   ArrayDouble muestras = newArrayDouble(cantidad);
-  for(int n = 0; n < cantidad; n++){
-    if(n!=0){
-      muestraTmp = sin(Wc*n) / (M_PI * n);
-    }else{
+  for (int n = 0; n < cantidad; n++) {
+    if (n != 0) {
+      muestraTmp = sin(Wc * n) / (M_PI * n);
+    } else {
       muestraTmp = Wc / M_PI;
     }
     muestras.items[n] = muestraTmp;
   }
   return muestras;
+}
+
+double sinc(double ang) {
+  if (ang == 0)
+    return 1;
+  else
+    return (sin(ang) / ang);
 }

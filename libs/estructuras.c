@@ -22,11 +22,12 @@ IN THE SOFTWARE.
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "complex.h"
 
 /*
  * Function:  newArrayDouble
  * --------------------
- * Crea un nuevo ArrayDouble, le asigna length=size y 
+ * Crea un nuevo ArrayDouble, le asigna length=size y
  * reserva sizeof(double)*size bytes de memoria
  *
  *  arguments
@@ -39,6 +40,13 @@ ArrayDouble newArrayDouble(int size) {
   arrayDouble.items = (double *)malloc(sizeof(double) * size);
   arrayDouble.length = size;
   return arrayDouble;
+}
+
+ArrayComplex newArrayComplex(int size) {
+  ArrayComplex arrayComplex;
+  arrayComplex.items = (ComplexNumber *)malloc(sizeof(ComplexNumber) * size);
+  arrayComplex.length = size;
+  return arrayComplex;
 }
 
 /*
@@ -61,12 +69,20 @@ void printArrayDouble(ArrayDouble a) {
   printf("\n");
 }
 
+void printArrayComplex(ArrayComplex a) {
+  printf(" ---- %d Elementos: -----\n", a.length);
+  for (int i = 0; i < a.length; i++) {
+    printf("\t[%d] %f + %fj\n", i, a.items[i].real, a.items[i].imag);
+  }
+  printf("\n");
+}
+
 /*
  * Function:  mapArrayDouble
  * --------------------
  * Realiza el mapeo de un arreglo a otro dominio siguiendo la formula:
  *  y[i] = (a[i] - menor(a)) / (mayor(a) - menor(a)) * (to - from) + from
- * 
+ *
  *  arguments
  *  a:  estructura de tipo ArrayDouble
  *  from: número menor del dominio destino
@@ -125,4 +141,54 @@ double getMenorDouble(ArrayDouble a) {
     if (a.items[i] < m) m = a.items[i];
   }
   return m;
+}
+
+ArrayDouble getRealFromArrayComplex(ArrayComplex c) {
+  ArrayDouble out = newArrayDouble(c.length);
+  for (int i = 0; i < c.length; i++) {
+    out.items[i] =
+        c.items[i].real > 1 ? 1 : c.items[i].real < -1 ? -1 : c.items[i].real;
+  }
+  return out;
+}
+
+ArrayDouble getImagFromArrayComplex(ArrayComplex c) {
+  ArrayDouble out = newArrayDouble(c.length);
+  for (int i = 0; i < c.length; i++) {
+    out.items[i] = c.items[i].imag;
+  }
+  return out;
+}
+
+ArrayDouble getMagFromArrayComplex(ArrayComplex c) {
+  ArrayDouble out = newArrayDouble(c.length);
+  for (int i = 0; i < c.length; i++) {
+    double m = getMagnitud(c.items[i]);
+    out.items[i] = m;
+    // out.items[i] = m > 1 ? 1 : m < -1 ? -1 : m;
+  }
+  out = mapArrayDouble(out, 0, 1);
+  return out;
+}
+
+ArrayDouble getAngFromArrayComplex(ArrayComplex c) {
+  ArrayDouble out = newArrayDouble(c.length);
+  for (int i = 0; i < c.length; i++) {
+    double m = getAngulo(c.items[i]);
+    out.items[i] = m;
+    // out.items[i] = m > 1 ? 1 : m < -1 ? -1 : m;
+  }
+  // out = mapArrayDouble(out, -1, 1);
+  return out;
+}
+
+ArrayDouble cutArrayDouble(ArrayDouble arr, int size_cut, int mode) {
+  ArrayDouble new;
+  if (mode == START_AND_END) {
+    new = newArrayDouble(arr.length - size_cut * 2);
+    for (int i = size_cut; i < arr.length - size_cut; i++) {
+      new.items[i - size_cut] = arr.items[i];
+    }
+  }
+  return new;
 }
