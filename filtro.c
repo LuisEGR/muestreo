@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include "libs/complex.h"
 #include "libs/dsp.h"
@@ -12,8 +13,9 @@
 int main(int argc, char *argv[]) {
   FILE *salida;
 
-  if (argc < 3) {
-    printf("Uso: %s <salida.wav> <frecuenciaCorte>\n", argv[0]);
+  if (argc < 4) {
+    printf("Uso: %s <salida.wav> <frecuenciaCorte> <frecuenciaMuestreo>\n",
+           argv[0]);
     return 0;
   }
 
@@ -23,17 +25,27 @@ int main(int argc, char *argv[]) {
 
   int nmuestras = 100;
   int frecCorte = 1000;
-  int frecMuest = 2000;
+  int frecMuest = 44100;
 
-  // frecCorte = atoi(argv[2]);
+  frecCorte = atoi(argv[2]);
+  frecMuest = atoi(argv[3]);
   // frecMuest = frecCorte ;
   // ArrayDouble filtro =
   //     obtenerMuestrasPasabajasIdeal(nmuestras, frecCorte, frecMuest);
+  int offset = (nmuestras / 2) - 1;
+  printf("\nOffset: %d", offset);
   ArrayDouble filtro = newArrayDouble(nmuestras);
-  for (int i = 0; i < 100; i++) {
-    double t = i / (44100 / 2);
-    filtro.items[i] = sinc(t - i + 49);
-  }
+  filtro = obtenerMuestrasPasabajasIdeal(nmuestras, frecCorte, frecMuest);
+  // for (int i = 0; i < nmuestras; i++) {
+  //   double t = (double)i / (double)frecMuest;
+  //   double ang = 2 * M_PI * frecCorte * t;
+  //   printf("\nFrecCorte: %d", frecCorte);
+  //   printf("\nt: %d", t);
+  //   printf("\nAngulo: %f", ang);
+
+  //   filtro.items[i] = sinc(ang - 4.5 * M_PI);
+  //   // filtro.items[i] = sinc(t - i + offset);
+  // }
   printf("\nFiltro pasa bajas:");
   printArrayDouble(filtro);
 

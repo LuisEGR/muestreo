@@ -66,20 +66,22 @@ ArrayDouble obtenerMuestrasPasabajasRC(int cantidad, float fc, float fm) {
  *
  *  returns: estructura ArrayDouble con las muestras del filtro
  */
-ArrayDouble obtenerMuestrasPasabajasIdeal(int cantidad, float fc, float fm) {
-  float Wc = (2 * M_PI * fc) / fm;
-  float muestraTmp;
+ArrayDouble obtenerMuestrasPasabajasIdeal(int nmuestras, float frecCorte,
+                                          float frecMuest) {
+  ArrayDouble filtro = newArrayDouble(nmuestras);
+  double t, ang;
+  double offset =
+      (2 * M_PI * frecCorte * ((nmuestras - 1) / (double)frecMuest)) / 2;
+  printf("\nOffset: %f", offset);
 
-  ArrayDouble muestras = newArrayDouble(cantidad);
-  for (int n = 0; n < cantidad; n++) {
-    if (n != 0) {
-      muestraTmp = sin(Wc * n) / (M_PI * n);
-    } else {
-      muestraTmp = Wc / M_PI;
-    }
-    muestras.items[n] = muestraTmp;
+  for (int i = 0; i < nmuestras; i++) {
+    t = (double)i / (double)frecMuest;
+    ang = 2 * M_PI * frecCorte * t;
+    printf("\n Angulo: %f", ang);
+    filtro.items[i] = sinc(ang - offset);
   }
-  return muestras;
+
+  return filtro;
 }
 
 double sinc(double ang) {

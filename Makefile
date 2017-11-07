@@ -23,5 +23,5 @@ clibs: $(LIBS_OBJECTS)
 	cd libs; make
 
 clean:
-	rm -f *.o muestreo recuperacion multiplicacion
+	rm -f *.o muestreo recuperacion multiplicacion filtro
 	cd libs; make clean

@@ -29,14 +29,17 @@ int main(int argc, char *argv[]) {
   //                                                    hEntrada.SampleRate);
   printf("\nMuestras Entrada: %d", hEntrada.Subchunk2Size / 2);
 
-  ArrayDouble filtro = newArrayDouble(100);
-  for (int i = 0; i < 100; i++) {
-    double t = i / (hEntrada.SampleRate / 2);
-    filtro.items[i] = sinc(t - i + 49);
-  }
+  int frecMuestFiltro = 2000;
+  // ArrayDouble filtro = newArrayDouble(100);
+  // for (int i = 0; i < 100; i++) {
+  //   double t = i / (hEntrada.SampleRate / 2);
+  //   filtro.items[i] = sinc(t - i + 49);
+  // }
   // printf("\nFiltro pasa bajas:");
   // printArrayDouble(filtro);
-
+  ArrayDouble filtro = obtenerMuestrasPasabajasIdeal(100, 1000, 50000);
+  printf("\nFiltro pasa bajas:");
+  printArrayDouble(filtro);
   ArrayDouble conv = convolucionPorFormula(entrada, hEntrada, filtro);
   conv = mapArrayDouble(conv, -1, 1);
   printf("\nConvolucion:");
