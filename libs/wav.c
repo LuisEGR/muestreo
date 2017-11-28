@@ -276,6 +276,7 @@ void writeSampleMono(FILE *file_p, MuestraMono muestra) {
   if (muestra.muestra > 1.0) muestra.muestra = 1.0;
   if (muestra.muestra < -1.0) muestra.muestra = -1.0;
   int16_t mwrite = (int16_t)(muestra.muestra * 32767);
+  // printf("WritingSample: %d", mwrite);
   fwrite(&mwrite, sizeof(int16_t), 1, file_p);
 }
 
@@ -299,6 +300,10 @@ void writeSamplesMono(FILE *file_p, ArrayDouble muestras) {
  *  returns: <none>
  */
 void writeSampleEstereo(FILE *file_p, MuestraEstereo muestra) {
+  if (muestra.left > 1.0) muestra.left = 1.0;
+  if (muestra.left < -1.0) muestra.left = -1.0;
+  if (muestra.right > 1.0) muestra.right = 1.0;
+  if (muestra.right < -1.0) muestra.right = -1.0;
   int16_t mwrite_l = (int16_t)(muestra.left * 32767);
   int16_t mwrite_r = (int16_t)(muestra.right * 32767);
   fwrite(&mwrite_l, sizeof(int16_t), 1, file_p);

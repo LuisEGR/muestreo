@@ -128,22 +128,25 @@ ArrayDouble transformadaFourierInversa(ArrayComplex X) {
   int N = X.length;
   double ang;
   double con;
-  double sumTemp;
-  ComplexNumber multi;
+  ComplexNumber sumTemp;
   ArrayDouble x = newArrayDouble(N);
   for (int n = 0; n <= N - 1; n++) {
-    sumTemp = 0;
-    for (int k = 0; k <= N / 2; k++) {
+    sumTemp = newComplexNumber(0,0);
+    for (int k = 0; k <= N - 1; k++) {
       ang = (2 * M_PI * k * n) / N;
-      multi = complexMulti(X.items[k], newComplexNumber(cos(ang), sin(ang)));
-      sumTemp += multi.real;
-      printComplex(multi);
+      ComplexNumber c = newComplexNumber(cos(ang), sin(ang));
+      ComplexNumber multi = complexMulti(X.items[k], c);
+      sumTemp = complexSum(sumTemp, multi);
+      // sumTemp += multi.real;
+          // printf("sumTemp: %f  ", sumTemp);
+      // printComplex(sumTemp);
+      // printf("%f", X.items[k]);
     }
-    x.items[n] = (1 / N) * sumTemp;
+    printComplex(sumTemp);
+
+    // x.items[n] = (1.0 / N) * sumTemp.real;
+    x.items[n] = getMagnitud(sumTemp);
+    // printf("%f\n", x.items[n]);
   }
   return x;
 }
-
-// ang = 2 * M_PI * k * n / N;
-// con = 1 / N;
-// x.items[n] = con * /

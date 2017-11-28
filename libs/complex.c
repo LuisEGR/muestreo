@@ -32,4 +32,11 @@ ComplexNumber complexMulti(ComplexNumber a, ComplexNumber b) {
   return res;
 }
 
+ComplexNumber complexSum(ComplexNumber a, ComplexNumber b) {
+  ComplexNumber res;
+  res.real = a.real + b.real;
+  res.imag = a.imag + b.imag;
+  return res;
+}
+
 void printComplex(ComplexNumber a) { printf("\t %f + %fj\n", a.real, a.imag); }

@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
   FILE *entrada, *salida;
 
   if (argc < 2) {
-    printf("Uso: %s <entrada.wav> <salida.wav> \n", argv[0]);
+    printf("Uso: %s <entrada.wav> <salida.wav> <fm> \n", argv[0]);
     return 0;
   }
 
@@ -22,6 +22,11 @@ int main(int argc, char *argv[]) {
   entrada = fopen(argv[1], "rb");
   salida = fopen(argv[2], "w+b");
 
+  if (entrada == NULL || salida == NULL) {
+    printf("\n Error al abrir los archivos!");
+    return 0;
+  }
+
   WAVHeader hEntrada = readHeaderWAV(entrada);
   // ArrayDouble filtro = obtenerMuestrasPasabajasIdeal(hEntrada.Subchunk2Size /
   // 2,
@@ -29,26 +34,28 @@ int main(int argc, char *argv[]) {
   //                                                    hEntrada.SampleRate);
   printf("\nMuestras Entrada: %d", hEntrada.Subchunk2Size / 2);
 
-  int frecMuestFiltro = 2000;
+  int frecCorteFiltro = atoi(argv[3]);
   // ArrayDouble filtro = newArrayDouble(100);
   // for (int i = 0; i < 100; i++) {
   //   double t = i / (hEntrada.SampleRate / 2);
   //   filtro.items[i] = sinc(t - i + 49);
   // }
-  // printf("\nFiltro pasa bajas:");
+  printf("\nFiltro pasa bajas (%dHz):", frecCorteFiltro);
   // printArrayDouble(filtro);
-  ArrayDouble filtro = obtenerMuestrasPasabajasIdeal(100, 1000, 50000);
+  int numMuestrasFiltroPasabajas = 100;
+  ArrayDouble filtro = obtenerMuestrasPasabajasIdeal(
+      numMuestrasFiltroPasabajas, frecCorteFiltro, hEntrada.SampleRate);
   printf("\nFiltro pasa bajas:");
   printArrayDouble(filtro);
   ArrayDouble conv = convolucionPorFormula(entrada, hEntrada, filtro);
   conv = mapArrayDouble(conv, -1, 1);
-  printf("\nConvolucion:");
-  printArrayDouble(conv);
+  // printf("\nConvolucion:");
+  // printArrayDouble(conv);
 
-  conv = cutArrayDouble(conv, 49, START_AND_END);
-
-  printf("\nConvolucion:");
-  printArrayDouble(conv);
+  conv = cutArrayDouble(conv, (numMuestrasFiltroPasabajas / 2) - 1, START_AND_END);
+// (  (((n % (N / 4)) / N * 4) * ((n % (N / 4)) / N * 4)) - 1/2) * 2
+                                printf("\nConvolucion:");
+  // printArrayDouble(conv);
 
   WAVHeader hSalida = newWAVHeader(1, conv.length, hEntrada.SampleRate);
   writeWAVHeader(salida, hSalida);

@@ -24,6 +24,13 @@ int main(int argc, char *argv[]) {
   entrada = fopen(argv[2], "rb");
   salida = fopen(argv[3], "w+b");
 
+  if (entrada == NULL || salida == NULL) {
+    printf("\n Error al abrir los archivos!");
+    return 0;
+  }
+
+  printf("\n Frecuencia de muestreo: %d", frecMuestreo);
+
   WAVHeader hEntrada = readHeaderWAV(entrada);
   duracion = getDuracionWAV(hEntrada);
   printf("Duración: %f", getDuracionWAV(hEntrada));
@@ -46,4 +53,5 @@ int main(int argc, char *argv[]) {
   fclose(salida);
   fclose(entrada);
   printf("\nSeñal muestreada guardada en %s\n", argv[3]);
+  return 1;
 }
