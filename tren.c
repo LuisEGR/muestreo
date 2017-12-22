@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   }
 
   float duracion = atof(argv[2]);
-  int frecMuestreo = 44100;
+  int frecMuestreo = 2000;
   int frecMuestreoTren = atoi(argv[3]);
 
   printf("\n Duracion: %f", duracion);
@@ -26,7 +26,6 @@ int main(int argc, char *argv[]) {
 
   ArrayDouble tren =
       crearTrenDeImpulsos(duracion, frecMuestreo, frecMuestreoTren);
-  // printArrayDouble(tren);
 
   WAVHeader hSalida = newWAVHeader(1, tren.length, frecMuestreo);
   writeWAVHeader(salida, hSalida);

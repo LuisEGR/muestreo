@@ -51,6 +51,8 @@ ArrayDouble getRealFromArrayComplex(ArrayComplex c);
 ArrayDouble getImagFromArrayComplex(ArrayComplex c);
 ArrayDouble getMagFromArrayComplex(ArrayComplex c);
 ArrayDouble getAngFromArrayComplex(ArrayComplex c);
+double mapNumberDouble(double num, double min, double max);
+
 
 ArrayDouble cutArrayDouble(ArrayDouble arr, int size_cut, int mode);
 #endif

@@ -28,20 +28,10 @@ int main(int argc, char *argv[]) {
   }
 
   WAVHeader hEntrada = readHeaderWAV(entrada);
-  // ArrayDouble filtro = obtenerMuestrasPasabajasIdeal(hEntrada.Subchunk2Size /
-  // 2,
-  //                                                    1000,
-  //                                                    hEntrada.SampleRate);
   printf("\nMuestras Entrada: %d", hEntrada.Subchunk2Size / 2);
 
   int frecCorteFiltro = atoi(argv[3]);
-  // ArrayDouble filtro = newArrayDouble(100);
-  // for (int i = 0; i < 100; i++) {
-  //   double t = i / (hEntrada.SampleRate / 2);
-  //   filtro.items[i] = sinc(t - i + 49);
-  // }
   printf("\nFiltro pasa bajas (%dHz):", frecCorteFiltro);
-  // printArrayDouble(filtro);
   int numMuestrasFiltroPasabajas = 100;
   ArrayDouble filtro = obtenerMuestrasPasabajasIdeal(
       numMuestrasFiltroPasabajas, frecCorteFiltro, hEntrada.SampleRate);
@@ -49,13 +39,8 @@ int main(int argc, char *argv[]) {
   printArrayDouble(filtro);
   ArrayDouble conv = convolucionPorFormula(entrada, hEntrada, filtro);
   conv = mapArrayDouble(conv, -1, 1);
-  // printf("\nConvolucion:");
-  // printArrayDouble(conv);
-
+  // Se cortan las muestras extras generadas por el filtro pasabajas
   conv = cutArrayDouble(conv, (numMuestrasFiltroPasabajas / 2) - 1, START_AND_END);
-// (  (((n % (N / 4)) / N * 4) * ((n % (N / 4)) / N * 4)) - 1/2) * 2
-                                printf("\nConvolucion:");
-  // printArrayDouble(conv);
 
   WAVHeader hSalida = newWAVHeader(1, conv.length, hEntrada.SampleRate);
   writeWAVHeader(salida, hSalida);

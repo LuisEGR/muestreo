@@ -105,6 +105,11 @@ ArrayDouble mapArrayDouble(ArrayDouble a, double from, double to) {
   return mapeado;
 }
 
+double mapNumberDouble(double num, double min, double max){
+  return num * (max - min) + min;
+}
+
+
 /*
  * Function:  getMayorDouble
  * --------------------

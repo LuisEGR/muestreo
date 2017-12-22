@@ -72,12 +72,9 @@ ArrayDouble obtenerMuestrasPasabajasIdeal(int nmuestras, float frecCorte,
   double t, ang;
   double offset =
       (2 * M_PI * frecCorte * ((nmuestras - 1) / (double)frecMuest)) / 2;
-  // printf("\nOffset: %f", offset);
-
   for (int i = 0; i < nmuestras; i++) {
     t = (double)i / (double)frecMuest;
     ang = 2 * M_PI * frecCorte * t;
-    // printf("\n Angulo: %f", ang);
     filtro.items[i] = sinc(ang - offset);
   }
 
